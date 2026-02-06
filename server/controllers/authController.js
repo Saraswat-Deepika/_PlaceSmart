@@ -33,6 +33,14 @@ const registerUser = async (req, res) => {
             role
         });
 
+        if (role === 'student') {
+            const Student = require('../models/Student');
+            await Student.create({
+                user: user.id,
+                // Initialize other fields if necessary
+            });
+        }
+
         if (user) {
             res.status(201).json({
                 _id: user.id,

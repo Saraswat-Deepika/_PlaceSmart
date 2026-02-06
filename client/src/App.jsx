@@ -8,7 +8,12 @@ import Signup from './pages/auth/Signup';
 import StudentDashboard from './pages/student/StudentDashboard';
 import Profile from './pages/student/Profile';
 import ApplyPlacement from './pages/student/ApplyPlacement';
-import ApplicationStatus from './pages/student/ApplicationStatus'; // Fixed import name
+import ApplicationStatus from './pages/student/ApplicationStatus';
+import EligibleDrives from './pages/student/EligibleDrives';
+import MyApplications from './pages/student/MyApplications';
+import ResumeIntelligence from './pages/student/ResumeIntelligence';
+import PlacementHistory from './pages/student/PlacementHistory';
+import Settings from './pages/student/Settings';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CreateDrive from './pages/admin/CreateDrive';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -27,8 +32,15 @@ function App() {
             {/* Student Routes */}
             <Route element={<ProtectedRoute allowedRoles={['student']} />}>
               <Route path="/student" element={<StudentDashboard />} />
+              <Route path="/student/dashboard" element={<StudentDashboard />} />
               <Route path="/student/profile" element={<Profile />} />
+              <Route path="/student/drives" element={<EligibleDrives />} />
+              <Route path="/student/applications" element={<MyApplications />} />
+              <Route path="/student/resume" element={<ResumeIntelligence />} />
+              <Route path="/student/history" element={<PlacementHistory />} />
+              <Route path="/student/settings" element={<Settings />} />
               <Route path="/student/apply" element={<ApplyPlacement />} />
+              <Route path="/student/apply/:id" element={<ApplyPlacement />} />
               <Route path="/student/status" element={<ApplicationStatus />} />
             </Route>
 

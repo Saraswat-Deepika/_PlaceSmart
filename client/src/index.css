@@ -1,8 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* Custom styles can go here */
+@theme {
+  --font-sans: "Inter", sans-serif;
+}
+
 body {
-    background-color: #f3f4f6;
+  /* @apply is supported but sometimes causes issues with ordering in V4 if not careful. 
+       Using standard CSS for body defaults is safer, or we can use the classes directly in the HTML.
+       Let's stick to standard CSS for the font to be safe, and standard classes for the rest. */
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  /* bg-gray-50 */
+  color: #111827;
+  /* text-gray-900 */
+}
+
+html {
+  scroll-behavior: smooth;
 }

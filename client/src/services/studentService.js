@@ -2,28 +2,46 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/student';
 
-const getProfile = async () => {
-    // const response = await axios.get(`${API_URL}/profile`);
-    // return response.data;
-    return { name: 'John Doe', branch: 'CSE', cgpa: 8.5 }; // Mock data
-};
-
-const applyForDrive = async (driveId) => {
-    // const response = await axios.post(`${API_URL}/apply/${driveId}`);
-    // return response.data;
-    return { success: true, message: 'Applied successfully' };
-};
-
-const getApplications = async () => {
-    // const response = await axios.get(`${API_URL}/applications`);
-    // return response.data;
-    return [{ company: 'Google', status: 'Applied' }, { company: 'Microsoft', status: 'Shortlisted' }];
+// Helper to get auth header
+const getAuthHeader = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.token) {
+        return { Authorization: `Bearer ${user.token}` };
+    } else {
+        return {};
+    }
 };
 
 const studentService = {
-    getProfile,
-    applyForDrive,
-    getApplications
+    async getProfile() {
+        const response = await axios.get(`${API_URL}/profile`, { headers: getAuthHeader() });
+        return response.data;
+    },
+
+    async updateProfile(profileData) {
+        const response = await axios.put(`${API_URL}/profile`, profileData, { headers: getAuthHeader() });
+        return response.data;
+    },
+
+    async getDashboardStats() {
+        const response = await axios.get(`${API_URL}/dashboard-stats`, { headers: getAuthHeader() });
+        return response.data;
+    },
+
+    async getApplications() {
+        const response = await axios.get(`${API_URL}/applications`, { headers: getAuthHeader() });
+        return response.data;
+    },
+
+    async getEligibleDrives() {
+        const response = await axios.get(`${API_URL}/drives`, { headers: getAuthHeader() });
+        return response.data;
+    },
+
+    async applyForDrive(driveId) {
+        const response = await axios.post(`${API_URL}/apply/${driveId}`, {}, { headers: getAuthHeader() });
+        return response.data;
+    }
 };
 
 export default studentService;
