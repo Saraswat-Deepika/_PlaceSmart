@@ -16,6 +16,10 @@ import PlacementHistory from './pages/student/PlacementHistory';
 import Settings from './pages/student/Settings';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CreateDrive from './pages/admin/CreateDrive';
+import ManageStudents from './pages/admin/ManageStudents';
+import ManageDrives from './pages/admin/ManageDrives';
+import AdminApplications from './pages/admin/AdminApplications';
+import AdminSettings from './pages/admin/AdminSettings';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -47,7 +51,12 @@ function App() {
             {/* Admin Routes */}
             <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/create-drive" element={<CreateDrive />} />
+              <Route path="/admin/students" element={<ManageStudents />} />
+              <Route path="/admin/drives" element={<ManageDrives />} />
+              <Route path="/admin/applications" element={<AdminApplications />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
               {/* Add other admin routes here */}
             </Route>
 

@@ -1,19 +1,17 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-// import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-    // const { user, loading } = useAuth();
-    const user = { role: 'student' }; // Placeholder
-    const loading = false; // Placeholder
+    const { currentUser, loading } = useAuth();
 
     if (loading) return <div>Loading...</div>;
 
-    if (!user) {
+    if (!currentUser) {
         return <Navigate to="/login" replace />;
     }
 
-    if (allowedRoles && !allowedRoles.includes(user.role)) {
+    if (allowedRoles && !allowedRoles.includes(currentUser.role)) {
         return <Navigate to="/unauthorized" replace />;
     }
 
