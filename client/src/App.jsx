@@ -21,6 +21,7 @@ import ManageDrives from './pages/admin/ManageDrives';
 import AdminApplications from './pages/admin/AdminApplications';
 import AdminSettings from './pages/admin/AdminSettings';
 import ProtectedRoute from './components/ProtectedRoute';
+import StudentLayout from './components/layouts/StudentLayout';
 
 function App() {
   return (
@@ -35,17 +36,19 @@ function App() {
 
             {/* Student Routes */}
             <Route element={<ProtectedRoute allowedRoles={['student']} />}>
-              <Route path="/student" element={<StudentDashboard />} />
-              <Route path="/student/dashboard" element={<StudentDashboard />} />
-              <Route path="/student/profile" element={<Profile />} />
-              <Route path="/student/drives" element={<EligibleDrives />} />
-              <Route path="/student/applications" element={<MyApplications />} />
-              <Route path="/student/resume" element={<ResumeIntelligence />} />
-              <Route path="/student/history" element={<PlacementHistory />} />
-              <Route path="/student/settings" element={<Settings />} />
-              <Route path="/student/apply" element={<ApplyPlacement />} />
-              <Route path="/student/apply/:id" element={<ApplyPlacement />} />
-              <Route path="/student/status" element={<ApplicationStatus />} />
+              <Route element={<StudentLayout />}>
+                <Route path="/student" element={<StudentDashboard />} />
+                <Route path="/student/dashboard" element={<StudentDashboard />} />
+                <Route path="/student/profile" element={<Profile />} />
+                <Route path="/student/drives" element={<EligibleDrives />} />
+                <Route path="/student/applications" element={<MyApplications />} />
+                <Route path="/student/resume" element={<ResumeIntelligence />} />
+                <Route path="/student/history" element={<PlacementHistory />} />
+                <Route path="/student/settings" element={<Settings />} />
+                <Route path="/student/apply" element={<ApplyPlacement />} />
+                <Route path="/student/apply/:id" element={<ApplyPlacement />} />
+                <Route path="/student/status" element={<ApplicationStatus />} />
+              </Route>
             </Route>
 
             {/* Admin Routes */}

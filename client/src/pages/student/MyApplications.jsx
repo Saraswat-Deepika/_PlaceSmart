@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import studentService from '../../services/studentService';
-import StudentSidebar from '../../components/StudentSidebar';
+
 
 const MyApplications = () => {
     const [applications, setApplications] = useState([]);
@@ -144,95 +144,90 @@ const MyApplications = () => {
     }
 
     return (
-        <div className="flex h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
-            <StudentSidebar />
-            <main className="flex-1 overflow-y-auto p-8">
-                <div className="max-w-7xl mx-auto">
-                    {/* Header */}
-                    <div className="mb-8">
-                        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">My Applications</h1>
-                        <p className="text-gray-600 text-lg">Track your placement application progress</p>
-                    </div>
+        <div className="max-w-7xl mx-auto p-8">
+            {/* Header */}
+            <div className="mb-8">
+                <h1 className="text-4xl font-extrabold text-gray-900 mb-2">My Applications</h1>
+                <p className="text-gray-600 text-lg">Track your placement application progress</p>
+            </div>
 
-                    {/* Stats */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <div className="bg-white rounded-xl p-6 shadow-md">
-                            <div className="text-3xl mb-2">📊</div>
-                            <div className="text-2xl font-bold text-gray-900">{displayApplications.length}</div>
-                            <div className="text-sm text-gray-600">Total Applications</div>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 shadow-md">
-                            <div className="text-3xl mb-2">⏳</div>
-                            <div className="text-2xl font-bold text-amber-600">
-                                {displayApplications.filter(a => ['Applied', 'Test Scheduled', 'Interview'].includes(a.status)).length}
-                            </div>
-                            <div className="text-sm text-gray-600">In Progress</div>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 shadow-md">
-                            <div className="text-3xl mb-2">🎉</div>
-                            <div className="text-2xl font-bold text-green-600">
-                                {displayApplications.filter(a => a.status === 'Offer').length}
-                            </div>
-                            <div className="text-sm text-gray-600">Offers Received</div>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 shadow-md">
-                            <div className="text-3xl mb-2">📈</div>
-                            <div className="text-2xl font-bold text-indigo-600">
-                                {Math.round((displayApplications.filter(a => a.status === 'Offer').length / displayApplications.length) * 100)}%
-                            </div>
-                            <div className="text-sm text-gray-600">Success Rate</div>
-                        </div>
-                    </div>
-
-                    {/* Filters */}
-                    <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-                        <div className="flex items-center gap-4 flex-wrap">
-                            <button
-                                onClick={() => setFilter('all')}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                All ({displayApplications.length})
-                            </button>
-                            <button
-                                onClick={() => setFilter('active')}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'active' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                Active ({displayApplications.filter(a => ['Applied', 'Test Scheduled', 'Interview'].includes(a.status)).length})
-                            </button>
-                            <button
-                                onClick={() => setFilter('offers')}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'offers' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                Offers ({displayApplications.filter(a => a.status === 'Offer').length})
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Applications Grid */}
-                    <div className="grid grid-cols-1 gap-6">
-                        {filteredApplications.map((application) => (
-                            <ApplicationCard key={application.id} application={application} />
-                        ))}
-                    </div>
-
-                    {filteredApplications.length === 0 && (
-                        <div className="bg-white rounded-xl shadow-md p-12 text-center">
-                            <div className="text-6xl mb-4">📝</div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No Applications Found</h3>
-                            <p className="text-gray-600 mb-6">Start applying to drives to track your progress here!</p>
-                            <button
-                                onClick={() => navigate('/student/drives')}
-                                className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
-                            >
-                                Browse Drives
-                            </button>
-                        </div>
-                    )}
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div className="bg-white rounded-xl p-6 shadow-md">
+                    <div className="text-3xl mb-2">📊</div>
+                    <div className="text-2xl font-bold text-gray-900">{displayApplications.length}</div>
+                    <div className="text-sm text-gray-600">Total Applications</div>
                 </div>
-            </main>
+                <div className="bg-white rounded-xl p-6 shadow-md">
+                    <div className="text-3xl mb-2">⏳</div>
+                    <div className="text-2xl font-bold text-amber-600">
+                        {displayApplications.filter(a => ['Applied', 'Test Scheduled', 'Interview'].includes(a.status)).length}
+                    </div>
+                    <div className="text-sm text-gray-600">In Progress</div>
+                </div>
+                <div className="bg-white rounded-xl p-6 shadow-md">
+                    <div className="text-3xl mb-2">🎉</div>
+                    <div className="text-2xl font-bold text-green-600">
+                        {displayApplications.filter(a => a.status === 'Offer').length}
+                    </div>
+                    <div className="text-sm text-gray-600">Offers Received</div>
+                </div>
+                <div className="bg-white rounded-xl p-6 shadow-md">
+                    <div className="text-3xl mb-2">📈</div>
+                    <div className="text-2xl font-bold text-indigo-600">
+                        {Math.round((displayApplications.filter(a => a.status === 'Offer').length / displayApplications.length) * 100)}%
+                    </div>
+                    <div className="text-sm text-gray-600">Success Rate</div>
+                </div>
+            </div>
+
+            {/* Filters */}
+            <div className="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div className="flex items-center gap-4 flex-wrap">
+                    <button
+                        onClick={() => setFilter('all')}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                    >
+                        All ({displayApplications.length})
+                    </button>
+                    <button
+                        onClick={() => setFilter('active')}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'active' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                    >
+                        Active ({displayApplications.filter(a => ['Applied', 'Test Scheduled', 'Interview'].includes(a.status)).length})
+                    </button>
+                    <button
+                        onClick={() => setFilter('offers')}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'offers' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                    >
+                        Offers ({displayApplications.filter(a => a.status === 'Offer').length})
+                    </button>
+                </div>
+            </div>
+
+            {/* Applications Grid */}
+            <div className="grid grid-cols-1 gap-6">
+                {filteredApplications.map((application) => (
+                    <ApplicationCard key={application.id} application={application} />
+                ))}
+            </div>
+
+            {filteredApplications.length === 0 && (
+                <div className="bg-white rounded-xl shadow-md p-12 text-center">
+                    <div className="text-6xl mb-4">📝</div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Applications Found</h3>
+                    <p className="text-gray-600 mb-6">Start applying to drives to track your progress here!</p>
+                    <button
+                        onClick={() => navigate('/student/drives')}
+                        className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+                    >
+                        Browse Drives
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import studentService from '../../services/studentService';
-import StudentSidebar from '../../components/StudentSidebar';
+
 
 const EligibleDrives = () => {
     const [drives, setDrives] = useState([]);
@@ -154,59 +154,54 @@ const EligibleDrives = () => {
     }
 
     return (
-        <div className="flex h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
-            <StudentSidebar />
-            <main className="flex-1 overflow-y-auto p-8">
-                <div className="max-w-7xl mx-auto">
-                    {/* Header */}
-                    <div className="mb-8">
-                        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Eligible Drives</h1>
-                        <p className="text-gray-600 text-lg">Browse and apply to placement opportunities matching your profile</p>
-                    </div>
+        <div className="max-w-7xl mx-auto p-8">
+            {/* Header */}
+            <div className="mb-8">
+                <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Eligible Drives</h1>
+                <p className="text-gray-600 text-lg">Browse and apply to placement opportunities matching your profile</p>
+            </div>
 
-                    {/* Filters */}
-                    <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-                        <div className="flex items-center gap-4 flex-wrap">
-                            <button
-                                onClick={() => setFilter('all')}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                All Drives ({displayDrives.length})
-                            </button>
-                            <button
-                                onClick={() => setFilter('high-match')}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'high-match' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                High Match (80%+)
-                            </button>
-                            <button
-                                onClick={() => setFilter('deadline-soon')}
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'deadline-soon' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                    }`}
-                            >
-                                Deadline Soon
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Drives Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {displayDrives.map((drive) => (
-                            <DriveCard key={drive.id} drive={drive} />
-                        ))}
-                    </div>
-
-                    {displayDrives.length === 0 && (
-                        <div className="bg-white rounded-xl shadow-md p-12 text-center">
-                            <div className="text-6xl mb-4">🎯</div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No Eligible Drives Found</h3>
-                            <p className="text-gray-600">Check back later for new opportunities!</p>
-                        </div>
-                    )}
+            {/* Filters */}
+            <div className="bg-white rounded-xl shadow-md p-6 mb-8">
+                <div className="flex items-center gap-4 flex-wrap">
+                    <button
+                        onClick={() => setFilter('all')}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                    >
+                        All Drives ({displayDrives.length})
+                    </button>
+                    <button
+                        onClick={() => setFilter('high-match')}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'high-match' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                    >
+                        High Match (80%+)
+                    </button>
+                    <button
+                        onClick={() => setFilter('deadline-soon')}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'deadline-soon' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                    >
+                        Deadline Soon
+                    </button>
                 </div>
-            </main>
+            </div>
+
+            {/* Drives Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {displayDrives.map((drive) => (
+                    <DriveCard key={drive.id} drive={drive} />
+                ))}
+            </div>
+
+            {displayDrives.length === 0 && (
+                <div className="bg-white rounded-xl shadow-md p-12 text-center">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Eligible Drives Found</h3>
+                    <p className="text-gray-600">Check back later for new opportunities!</p>
+                </div>
+            )}
         </div>
     );
 };

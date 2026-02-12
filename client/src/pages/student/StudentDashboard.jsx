@@ -211,242 +211,180 @@ const StudentDashboard = () => {
     };
 
     return (
-        <div className="flex h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
-            {/* Sidebar */}
-            <aside className="w-72 bg-white shadow-2xl flex flex-col border-r border-gray-200">
-                {/* Profile Section */}
-                <div className="p-6 bg-gradient-to-br from-indigo-600 to-purple-600 text-white">
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl font-bold text-indigo-600 shadow-lg">
-                            👨‍🎓
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-lg">{currentUser?.name || 'Student'}</h3>
-                            <p className="text-sm text-indigo-100">{currentUser?.department || 'Computer Science'}</p>
-                        </div>
-                    </div>
-                    {/* Profile Completion */}
-                    <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="text-xs font-medium">Profile Completion</span>
-                            <span className="text-xs font-bold">{stats.profileCompletionPercentage || 75}%</span>
-                        </div>
-                        <div className="w-full bg-white/30 rounded-full h-2">
-                            <div
-                                className="bg-white h-2 rounded-full transition-all duration-500"
-                                style={{ width: `${stats.profileCompletionPercentage || 75}%` }}
-                            ></div>
-                        </div>
-                    </div>
+        <div className="max-w-7xl mx-auto p-8">
+            {/* Header */}
+            <header className="mb-8">
+                <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+                    Welcome back, {currentUser?.name || 'Student'}! 👋
+                </h1>
+                <p className="text-gray-600 text-lg">Here's your placement journey overview</p>
+            </header>
+
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <StatCard
+                    title="Eligible Drives"
+                    value={stats.upcomingDrives || 12}
+                    icon="🎯"
+                    color="indigo"
+                    trend={15}
+                    subtitle="New this week"
+                />
+                <StatCard
+                    title="Applications"
+                    value={stats.applicationsApplied || 8}
+                    icon="📝"
+                    color="emerald"
+                    trend={25}
+                    subtitle="Submitted"
+                />
+                <StatCard
+                    title="Interviews"
+                    value={stats.interviewsScheduled || 3}
+                    icon="💼"
+                    color="purple"
+                    subtitle="Scheduled"
+                />
+                <StatCard
+                    title="Offers"
+                    value={stats.offersReceived || 1}
+                    icon="🎉"
+                    color="amber"
+                    trend={100}
+                    subtitle="Received"
+                />
+            </div>
+
+            {/* Quick Actions */}
+            <section className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <QuickActionCard
+                        icon="📄"
+                        title="Upload Resume"
+                        description="Update your latest resume"
+                        onClick={() => handleSectionChange('resume')}
+                        color="indigo"
+                    />
+                    <QuickActionCard
+                        icon="🎯"
+                        title="View Drives"
+                        description="Browse eligible opportunities"
+                        onClick={() => handleSectionChange('drives')}
+                        color="purple"
+                    />
+                    <QuickActionCard
+                        icon="📊"
+                        title="Track Status"
+                        description="Check application progress"
+                        onClick={() => handleSectionChange('applications')}
+                        color="emerald"
+                    />
+                    <QuickActionCard
+                        icon="✏️"
+                        title="Update Profile"
+                        description="Complete your profile"
+                        onClick={() => handleSectionChange('profile')}
+                        color="amber"
+                    />
                 </div>
+            </section>
 
-                {/* Navigation Menu */}
-                <nav className="flex-1 p-4 overflow-y-auto">
-                    {menuItems.map((item) => (
-                        <button
-                            key={item.id}
-                            onClick={() => handleSectionChange(item.id)}
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl mb-2 transition-all duration-300 ${activeSection === item.id
-                                    ? 'bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 shadow-md'
-                                    : 'text-gray-600 hover:bg-gray-100'
-                                }`}
-                        >
-                            <span className="text-2xl">{item.icon}</span>
-                            <span className="font-semibold">{item.label}</span>
-                        </button>
-                    ))}
-                </nav>
-
-                {/* Logout Button */}
-                <div className="p-4 border-t border-gray-200">
+            {/* Eligible Drives Preview */}
+            <section className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900">Eligible Drives</h2>
                     <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-300 font-semibold"
+                        onClick={() => handleSectionChange('drives')}
+                        className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors"
                     >
-                        <span className="text-2xl">🚪</span>
-                        <span>Logout</span>
+                        View All →
                     </button>
                 </div>
-            </aside>
-
-            {/* Main Content */}
-            <main className="flex-1 overflow-y-auto">
-                <div className="max-w-7xl mx-auto p-8">
-                    {/* Header */}
-                    <header className="mb-8">
-                        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-                            Welcome back, {currentUser?.name || 'Student'}! 👋
-                        </h1>
-                        <p className="text-gray-600 text-lg">Here's your placement journey overview</p>
-                    </header>
-
-                    {/* Statistics Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <StatCard
-                            title="Eligible Drives"
-                            value={stats.upcomingDrives || 12}
-                            icon="🎯"
-                            color="indigo"
-                            trend={15}
-                            subtitle="New this week"
-                        />
-                        <StatCard
-                            title="Applications"
-                            value={stats.applicationsApplied || 8}
-                            icon="📝"
-                            color="emerald"
-                            trend={25}
-                            subtitle="Submitted"
-                        />
-                        <StatCard
-                            title="Interviews"
-                            value={stats.interviewsScheduled || 3}
-                            icon="💼"
-                            color="purple"
-                            subtitle="Scheduled"
-                        />
-                        <StatCard
-                            title="Offers"
-                            value={stats.offersReceived || 1}
-                            icon="🎉"
-                            color="amber"
-                            trend={100}
-                            subtitle="Received"
-                        />
-                    </div>
-
-                    {/* Quick Actions */}
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <QuickActionCard
-                                icon="📄"
-                                title="Upload Resume"
-                                description="Update your latest resume"
-                                onClick={() => handleSectionChange('resume')}
-                                color="indigo"
-                            />
-                            <QuickActionCard
-                                icon="🎯"
-                                title="View Drives"
-                                description="Browse eligible opportunities"
-                                onClick={() => handleSectionChange('drives')}
-                                color="purple"
-                            />
-                            <QuickActionCard
-                                icon="📊"
-                                title="Track Status"
-                                description="Check application progress"
-                                onClick={() => handleSectionChange('applications')}
-                                color="emerald"
-                            />
-                            <QuickActionCard
-                                icon="✏️"
-                                title="Update Profile"
-                                description="Complete your profile"
-                                onClick={() => handleSectionChange('profile')}
-                                color="amber"
-                            />
-                        </div>
-                    </section>
-
-                    {/* Eligible Drives Preview */}
-                    <section className="mb-8">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-2xl font-bold text-gray-900">Eligible Drives</h2>
-                            <button
-                                onClick={() => handleSectionChange('drives')}
-                                className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors"
-                            >
-                                View All →
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <DriveCard
-                                company="Google"
-                                role="Software Engineer"
-                                package="₹25-30 LPA"
-                                deadline="15 Feb 2026"
-                                matchPercentage={95}
-                            />
-                            <DriveCard
-                                company="Microsoft"
-                                role="SDE Intern"
-                                package="₹1L/month"
-                                deadline="20 Feb 2026"
-                                matchPercentage={88}
-                            />
-                            <DriveCard
-                                company="Amazon"
-                                role="Backend Developer"
-                                package="₹20-25 LPA"
-                                deadline="25 Feb 2026"
-                                matchPercentage={82}
-                            />
-                        </div>
-                    </section>
-
-                    {/* Application Status Tracker */}
-                    <section className="mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Recent Applications</h2>
-                        <div className="space-y-3">
-                            <ApplicationStatusCard
-                                company="Google"
-                                role="Software Engineer"
-                                status="Interview"
-                                date="2 days ago"
-                            />
-                            <ApplicationStatusCard
-                                company="Microsoft"
-                                role="SDE Intern"
-                                status="Test Scheduled"
-                                date="5 days ago"
-                            />
-                            <ApplicationStatusCard
-                                company="Amazon"
-                                role="Backend Developer"
-                                status="Applied"
-                                date="1 week ago"
-                            />
-                        </div>
-                    </section>
-
-                    {/* Resume Intelligence Widget */}
-                    <section className="mb-8">
-                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 border border-amber-200 shadow-lg">
-                            <div className="flex items-start justify-between mb-6">
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Resume Intelligence</h2>
-                                    <p className="text-gray-600">AI-powered insights to improve your profile</p>
-                                </div>
-                                <div className="text-center">
-                                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
-                                        {stats.resumeScore || 85}%
-                                    </div>
-                                    <p className="text-xs text-gray-600 mt-2">Match Score</p>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div className="bg-white rounded-lg p-4 shadow-sm">
-                                    <div className="text-2xl mb-2">💡</div>
-                                    <h4 className="font-semibold text-gray-900 mb-1">Skill Gaps</h4>
-                                    <p className="text-sm text-gray-600">Add React, Node.js</p>
-                                </div>
-                                <div className="bg-white rounded-lg p-4 shadow-sm">
-                                    <div className="text-2xl mb-2">📈</div>
-                                    <h4 className="font-semibold text-gray-900 mb-1">Improvements</h4>
-                                    <p className="text-sm text-gray-600">Update projects section</p>
-                                </div>
-                                <div className="bg-white rounded-lg p-4 shadow-sm">
-                                    <div className="text-2xl mb-2">🎯</div>
-                                    <h4 className="font-semibold text-gray-900 mb-1">Recommendations</h4>
-                                    <p className="text-sm text-gray-600">Add certifications</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <DriveCard
+                        company="Google"
+                        role="Software Engineer"
+                        package="₹25-30 LPA"
+                        deadline="15 Feb 2026"
+                        matchPercentage={95}
+                    />
+                    <DriveCard
+                        company="Microsoft"
+                        role="SDE Intern"
+                        package="₹1L/month"
+                        deadline="20 Feb 2026"
+                        matchPercentage={88}
+                    />
+                    <DriveCard
+                        company="Amazon"
+                        role="Backend Developer"
+                        package="₹20-25 LPA"
+                        deadline="25 Feb 2026"
+                        matchPercentage={82}
+                    />
                 </div>
-            </main>
+            </section>
+
+            {/* Application Status Tracker */}
+            <section className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Recent Applications</h2>
+                <div className="space-y-3">
+                    <ApplicationStatusCard
+                        company="Google"
+                        role="Software Engineer"
+                        status="Interview"
+                        date="2 days ago"
+                    />
+                    <ApplicationStatusCard
+                        company="Microsoft"
+                        role="SDE Intern"
+                        status="Test Scheduled"
+                        date="5 days ago"
+                    />
+                    <ApplicationStatusCard
+                        company="Amazon"
+                        role="Backend Developer"
+                        status="Applied"
+                        date="1 week ago"
+                    />
+                </div>
+            </section>
+
+            {/* Resume Intelligence Widget */}
+            <section className="mb-8">
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 border border-amber-200 shadow-lg">
+                    <div className="flex items-start justify-between mb-6">
+                        <div>
+                            <h2 className="text-2xl font-bold text-gray-900 mb-2">Resume Intelligence</h2>
+                            <p className="text-gray-600">AI-powered insights to improve your profile</p>
+                        </div>
+                        <div className="text-center">
+                            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                                {stats.resumeScore || 85}%
+                            </div>
+                            <p className="text-xs text-gray-600 mt-2">Match Score</p>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                            <div className="text-2xl mb-2">💡</div>
+                            <h4 className="font-semibold text-gray-900 mb-1">Skill Gaps</h4>
+                            <p className="text-sm text-gray-600">Add React, Node.js</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                            <div className="text-2xl mb-2">📈</div>
+                            <h4 className="font-semibold text-gray-900 mb-1">Improvements</h4>
+                            <p className="text-sm text-gray-600">Update projects section</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                            <div className="text-2xl mb-2">🎯</div>
+                            <h4 className="font-semibold text-gray-900 mb-1">Recommendations</h4>
+                            <p className="text-sm text-gray-600">Add certifications</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

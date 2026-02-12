@@ -71,13 +71,21 @@ const StudentSidebar = () => {
 
             {/* Navigation Menu */}
             <nav className="flex-1 p-4 overflow-y-auto">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl mb-2 text-gray-600 hover:bg-gray-100 transition-all duration-300"
+                >
+                    <span className="text-2xl">⬅️</span>
+                    <span className="font-semibold">Back</span>
+                </button>
+
                 {menuItems.map((item) => (
                     <button
                         key={item.id}
                         onClick={() => handleSectionChange(item.id)}
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl mb-2 transition-all duration-300 ${isActive(item.path)
-                                ? 'bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 shadow-md'
-                                : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 shadow-md'
+                            : 'text-gray-600 hover:bg-gray-100'
                             }`}
                     >
                         <span className="text-2xl">{item.icon}</span>
